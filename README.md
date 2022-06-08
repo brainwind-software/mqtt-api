@@ -13,7 +13,7 @@ Make sure you have the mqtt.js library installed,
 if not please install with
 
 ```sh
-npm install mqtt-api --save
+npm install mqtt --save
 ```
 
 Now install mqtt-api

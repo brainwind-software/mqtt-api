@@ -10,7 +10,7 @@ export type RequestParameters =
     | number
     | boolean
     | { [x: string]: RequestParameters }
-    | Array<RequestParameters>;
+    | RequestParameters[];
 export type RequestOptions = {
     timeout?: number;
 };

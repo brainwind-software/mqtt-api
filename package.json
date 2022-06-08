@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A library for API-like usage of the MQTT protocol",
   "author": "Fabian Dreßen <mqttapi@brainwind.de> (https://github.com/brainwind-software)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainwind-software/mqtt-api.git"
+  },
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
