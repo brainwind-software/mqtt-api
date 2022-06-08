@@ -1,6 +1,8 @@
 MIT License
+=====================
 
-Copyright (c) 2022 brainwind-software
+Copyright (c) 2022 Fabian Dreßen <mqttapi@brainwind.de> (https://github.com/brainwind-software)
+---------------------------------------
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
