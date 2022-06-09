@@ -2,15 +2,11 @@
 
 import { IClientPublishOptions, MqttClient, PacketCallback } from 'mqtt';
 
-import { MqttApiOptions, defaultMqttApiOptions, parseJSON } from './helpers';
+import { MqttApiOptions, defaultMqttApiOptions, parseJSON, JSONobject } from './helpers';
+import type { ResponseParameters } from './server';
 
 // request types
-export type RequestParameters =
-    | string
-    | number
-    | boolean
-    | { [x: string]: RequestParameters }
-    | RequestParameters[];
+export type RequestParameters = JSONobject;
 export type RequestOptions = {
     timeout?: number;
 };
@@ -65,9 +61,9 @@ export class Client {
         return (Date.now().toString(36) + Math.random().toString(36)).replace(/\./g, '');
     }
 
-    request(topic: string, params: RequestParameters, options?: RequestOptions, clientCallback?: PacketCallback): Promise<Response>;
-    request(topic: string, params: RequestParameters, options: RequestOptions, clientOpts: IClientPublishOptions, clientCallback?: PacketCallback): Promise<Response>;
-    request(topic: string, params: RequestParameters, options?: RequestOptions, ...args: any[]): Promise<any> {
+    request(topic: string, params: RequestParameters, options?: RequestOptions, clientCallback?: PacketCallback): Promise<ResponseParameters>;
+    request(topic: string, params: RequestParameters, options: RequestOptions, clientOpts: IClientPublishOptions, clientCallback?: PacketCallback): Promise<ResponseParameters>;
+    request(topic: string, params: RequestParameters, options?: RequestOptions, ...args: any[]): Promise<ResponseParameters> {
         return new Promise<any>((resolve, reject) => {
             const responseTopic = `${this.options.response.topicPrefix}${this.generateUniqueID()}`;
 

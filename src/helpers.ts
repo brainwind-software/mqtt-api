@@ -9,6 +9,13 @@ export type MqttApiOptions = {
     };
 };
 
+export type JSONobject =
+    | string
+    | number
+    | boolean
+    | { [x: string]: JSONobject }
+    | JSONobject[];
+
 export const defaultMqttApiOptions: MqttApiOptions = {
     logger: console,
     response: {

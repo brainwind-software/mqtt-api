@@ -3,11 +3,11 @@
 import { ClientSubscribeCallback, IClientSubscribeOptions, MqttClient } from 'mqtt';
 
 import type { RequestParameters, Request } from './client';
-import { MqttApiOptions, defaultMqttApiOptions, parseJSON } from './helpers';
+import { MqttApiOptions, defaultMqttApiOptions, parseJSON, JSONobject } from './helpers';
 
 // listener types
-export type ListenerResponse = (data: any) => void;
-export type ListenerCallback = (params: RequestParameters, res: ListenerResponse) => void;
+export type ResponseParameters = JSONobject;
+export type ListenerCallback = (params: RequestParameters) => Promise<ResponseParameters>;
 
 export class Server {
     private client: MqttClient;
@@ -31,7 +31,8 @@ export class Server {
                     this.options.logger.warn('got invalid request', request);
                     return;
                 }
-                this.listeners[topic](request.params, (data: any) => this.client.publish(request.responseTopic, JSON.stringify(data)));
+                this.listeners[topic](request.params)
+                    .then((response: ResponseParameters) => this.client.publish(request.responseTopic, JSON.stringify(response)));
             }
         });
     }

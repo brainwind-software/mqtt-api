@@ -34,8 +34,8 @@ describe('Request<>Response', () => {
 
   it('get correct response to request', () => {
     mqttApiServer
-      .listen('/test', (params: mqttApi.RequestParameters, res: mqttApi.ListenerResponse) => {
-        res({
+      .listen('/test', (params: mqttApi.RequestParameters) => {
+        return Promise.resolve({
           testingRequestedParams: params,
         });
       });
