@@ -39,8 +39,84 @@ npm install mqtt-api --save
 
 <a name="example"></a>
 ## Examples
+**Note**: These short examples are written in TypeScript, but you can also use MQTT-API with pure JavaScript, just remove the types from the code.
+(Have a look at the examples directory in this repository)
 
-*Coming soon...*
+**Prerequisite**
+
+You need a running MQTT server instance, if you just want to make some tests, you might use the dockerized version of mosquitto:
+```sh
+docker run -it -p 1883:1883 eclipse-mosquitto mosquitto -c /mosquitto-no-auth.conf
+```
+
+**Client (Promise-style)**
+```node
+// set request parameters & options
+const params = {
+  foo: "bar",
+  test: "something",
+};
+const options: mqttApi.RequestOptions = {
+  timeout: 2000,
+};
+
+// request (Promise-style)
+mqttApiClient.request('/test', params, options)
+  .then((response: mqttApi.ResponseParameters) => {
+    console.log('response is: ', response);
+  })
+  .catch((err: mqttApi.ResponseError) => {
+    console.error('request error: ', err);
+  });
+```
+
+**Client (async/await style)**
+```node
+// set request parameters & options
+const params = {
+  foo: "bar",
+  test: "something",
+};
+const options: mqttApi.RequestOptions = {
+  timeout: 2000,
+};
+
+// request (async/await style)
+console.log('>>> requesting (async/await style) on /test: ', params);
+try {
+  const response: mqttApi.ResponseParameters = await mqttApiClient.request('/test', params, options);
+  console.log('response is: ', response);
+} catch (err) {
+  console.error('request error: ', err);
+}
+```
+
+**Server (Promise-style)**
+```node
+// set up listener (Promise-style)
+mqttApiServer.listen('/test', (params: mqttApi.RequestParameters) => {
+  return Promise.resolve({
+    processed: 'OK',
+    requestedParams: params,
+  });
+});
+```
+
+**Server (async/await style)**
+```node
+// set up listener (async/await style)
+mqttApiServer.listen('/test-async', async (params: mqttApi.RequestParameters) => {
+  return {
+    processed: 'OK',
+    requestedParams: params,
+  };
+});
+```
+
+**Full, working examples**
+
+For full, working examples see examples directory in this repository.
+
 
 <a name="license"></a>
 ## License
