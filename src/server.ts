@@ -5,6 +5,16 @@ import { ClientSubscribeCallback, IClientSubscribeOptions, MqttClient } from 'mq
 import type { RequestParameters, Request } from './client';
 import { MqttApiOptions, defaultMqttApiOptions, parseJSON, JSONobject } from './helpers';
 
+// response error types
+export enum ResponseErrorType {
+    Timeout = 'timeout',
+    ListenerCatch = 'listenerCatch',
+};
+export type ResponseError = {
+    type: ResponseErrorType;
+    text: string;
+};
+
 // listener types
 export type ResponseParameters = JSONobject;
 export type ListenerCallback = (params: RequestParameters) => Promise<ResponseParameters>;
@@ -32,7 +42,14 @@ export class Server {
                     return;
                 }
                 this.listeners[topic](request.params)
-                    .then((response: ResponseParameters) => this.client.publish(request.responseTopic, JSON.stringify(response)));
+                    .then((response: ResponseParameters) => this.client.publish(request.responseTopic, JSON.stringify(response)))
+                    .catch(baseError => {
+                        const error: ResponseError = {
+                            type: ResponseErrorType.ListenerCatch,
+                            text: baseError,
+                        };
+                        return Promise.reject(error);
+                    });
             }
         });
     }

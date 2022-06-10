@@ -3,7 +3,8 @@
 import { IClientPublishOptions, MqttClient, PacketCallback } from 'mqtt';
 
 import { MqttApiOptions, defaultMqttApiOptions, parseJSON, JSONobject } from './helpers';
-import type { ResponseParameters } from './server';
+import type { ResponseError, ResponseParameters } from './server';
+import { ResponseErrorType } from './server';
 
 // request types
 export type RequestParameters = JSONobject;
@@ -13,15 +14,6 @@ export type RequestOptions = {
 export type Request = {
     responseTopic: string;
     params: RequestParameters;
-};
-
-// response error types
-export enum ResponseErrorType {
-    Timeout = 'timeout',
-};
-export type ResponseError = {
-    type: ResponseErrorType;
-    text: string;
 };
 
 export class Client {
