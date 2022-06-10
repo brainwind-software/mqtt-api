@@ -1,6 +1,6 @@
 {
   "name": "mqtt-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library for API-like usage of the MQTT protocol",
   "author": "Fabian Dreßen <mqttapi@brainwind.de> (https://github.com/brainwind-software)",
   "repository": {
@@ -15,17 +15,19 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build",
+    "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "preversion" : "npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "mqtt",
     "api"
   ],
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "@types/node": "^17.0.40",

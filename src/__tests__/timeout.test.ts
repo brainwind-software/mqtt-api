@@ -19,7 +19,7 @@ describe('Timeout', () => {
         mqttApiClient = new mqttApi.Client(mqttClient);
         resolve();
       });
-    })
+    });
   });
 
   afterAll(() => {
@@ -28,18 +28,18 @@ describe('Timeout', () => {
 
   it('Times out, if no listener responds', () => {
     const testParams = {
-      test1: "A",
-      test2: "B",
+      test1: 'A',
+      test2: 'B',
     };
     return mqttApiClient
       .request('/test', testParams, {
         timeout: 2000,
       })
-      .then(() => { })
+      .then(() => {})
       .catch((err: mqttApi.ResponseError) => {
         expect(err).toStrictEqual({
-          "text": "Request timed out",
-          "type": "timeout",
+          text: 'Request timed out',
+          type: 'timeout',
         });
       });
   });
